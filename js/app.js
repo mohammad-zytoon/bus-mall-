@@ -37,26 +37,26 @@ Mallitems.allProducts = [];
 
 
 
-new Mallitems('bag', '../img/bag.jpg');
-new Mallitems('banana', '../img/banana.jpg');
-new Mallitems('bathroom', '../img/bathroom.jpg');
-new Mallitems('boots', '../img/boots.jpg');
-new Mallitems('breakfast', '../img/breakfast.jpg');
-new Mallitems('bubblegum', '../img/bubblegum.jpg');
-new Mallitems('chair', '../img/chair.jpg');
-new Mallitems('cthulhu', '../img/cthulhu.jpg');
-new Mallitems('dog-duck', '../img/dog-duck.jpg');
-new Mallitems('dragon', '../img/dragon.jpg');
-new Mallitems('pen', '../img/pen.jpg');
-new Mallitems('pet-sweep', '../img/pet-sweep.jpg');
-new Mallitems('scissors', '../img/scissors.jpg');
-new Mallitems('shark', '../img/shark.jpg');
-new Mallitems('sweep', '../img/sweep.png');
-new Mallitems('tauntaun', '../img/tauntaun.jpg');
-new Mallitems('unicorn', '../img/unicorn.jpg');
-new Mallitems('usb', '../img/usb.gif');
-new Mallitems('water-can', '../img/water-can.jpg');
-new Mallitems('wine-glass', '../img/wine-glass.jpg');
+new Mallitems('bag', 'img/bag.jpg');
+new Mallitems('banana', 'img/banana.jpg');
+new Mallitems('bathroom', 'img/bathroom.jpg');
+new Mallitems('boots', 'img/boots.jpg');
+new Mallitems('breakfast', 'img/breakfast.jpg');
+new Mallitems('bubblegum', 'img/bubblegum.jpg');
+new Mallitems('chair', 'img/chair.jpg');
+new Mallitems('cthulhu', 'img/cthulhu.jpg');
+new Mallitems('dog-duck', 'img/dog-duck.jpg');
+new Mallitems('dragon', 'img/dragon.jpg');
+new Mallitems('pen', 'img/pen.jpg');
+new Mallitems('pet-sweep', 'img/pet-sweep.jpg');
+new Mallitems('scissors', 'img/scissors.jpg');
+new Mallitems('shark', 'img/shark.jpg');
+new Mallitems('sweep', 'img/sweep.png');
+new Mallitems('tauntaun', 'img/tauntaun.jpg');
+new Mallitems('unicorn', 'img/unicorn.jpg');
+new Mallitems('usb', 'img/usb.gif');
+new Mallitems('water-can', 'img/water-can.jpg');
+new Mallitems('wine-glass', 'img/wine-glass.jpg');
 
 console.log(Mallitems.allProducts);
 
@@ -66,9 +66,9 @@ function generatRandomind() {
 
 function renderItems() {
 
-    let leftIndex = generatRandomind();
-    let middleIndex = generatRandomind();
-    let rghitIndex = generatRandomind();
+    leftIndex = generatRandomind();
+    middleIndex = generatRandomind();
+    rghitIndex = generatRandomind();
 
     while (leftIndex === middleIndex || leftIndex === rghitIndex || rghitIndex === middleIndex) {
         middleIndex = generatRandomind();
@@ -79,12 +79,15 @@ function renderItems() {
     //console.log(allProducts[rghitIndex].source);
 
     leftImageElement.src = Mallitems.allProducts[leftIndex].source;
+    Mallitems.allProducts[leftIndex].appear++;
     // imgShowArr[0].alt = allProducts[leftIndex].name;
 
     middleImageElement.src = Mallitems.allProducts[middleIndex].source;
+    Mallitems.allProducts[rghitIndex].appear++;
     // imgShowArr[1].alt = allProducts[middleIndex].name;
 
     rightImageElement.src = Mallitems.allProducts[rghitIndex].source;
+    Mallitems.allProducts[middleIndex].appear++;
     // imgShowArr[2].alt = allProducts[rghitIndex].name;
 
 
@@ -102,30 +105,32 @@ function handleClick(event) {
     voterAttempts++;
     console.log(voterAttempts);
 
-    if (voterAttempts < maxAttempts) {
+    if (voterAttempts <= maxAttempts) {
         if (event.target.id === 'middleimg') {
 
             Mallitems.allProducts[middleIndex].votes++;
-            Mallitems.allProducts[middleIndex].appear++;
-            Mallitems.allProducts[leftIndex].appear++;
-            Mallitems.allProducts[rghitIndex].appear++;
+            //Mallitems.allProducts[leftIndex].appear++;
+            //Mallitems.allProducts[rghitIndex].appear++;
 
         }
 
         else if (event.target.id === 'leftimg') {
-
+           console.log(rghitIndex);
+           
+            
             Mallitems.allProducts[leftIndex].votes++;
-            Mallitems.allProducts[leftIndex].appear++;
-            Mallitems.allProducts[middleIndex].appear++;
-            Mallitems.allProducts[rghitIndex].appear++;
+            // Mallitems.allProducts[middleIndex].appear++;
+            //Mallitems.allProducts[rghitIndex].appear++;
         }
         else if (event.target.id === 'rightimg') {
 
             Mallitems.allProducts[rghitIndex].votes++;
-            Mallitems.allProducts[rghitIndex].appear++;
-            Mallitems.allProducts[middleIndex].appear++;
-            Mallitems.allProducts[leftIndex].appear++;
-        } 
+            // Mallitems.allProducts[middleIndex].appear++;
+            // Mallitems.allProducts[leftIndex].appear++;
+        } else {
+            
+            voterAttempts--;
+        }
 
         renderItems();
     }
@@ -133,20 +138,25 @@ function handleClick(event) {
         let resultList = document.getElementById('voote-result');
         resultList.addEventListener('click', vooterclickbotton);
 
-        function vooterclickbotton(event) {
-            let vooteResult = document.getElementById('result-list');
-            let busmallItems;
-
-            for (letj = 0; j < Mallitems.allProducts.length; j++) {
-                let busmallItems = document.createElement('li');
-                list.appendChild(busmallItems);
-                busmallItems.textContent = `${Mallitems.allProducts[j].name} take ${Mallitems.allProducts[j].votes} votes and shown for ${Mallitems.allProducts[j].appear} times`;
-
-            }
-            resultList.textContent = busmallItems;
-        }
         images.removeEventListener('click', handleClick);
+    }
+}
+function vooterclickbotton() {
+    let vooteResult = document.getElementById('result-list');
+    
+    let busmallItems;
+
+    for (let j = 0; j < Mallitems.allProducts.length; j++) {
+        busmallItems = document.createElement('li');
+        vooteResult.appendChild(busmallItems);
+        busmallItems.textContent = `${Mallitems.allProducts[j].name} take ${Mallitems.allProducts[j].votes} votes and shown for ${Mallitems.allProducts[j].appear} times`;
 
     }
-
+    //resultList.textContent = busmallItems;
+    resultList.removeEventListener('click', vooterclickbotton);
 }
+
+
+
+
+

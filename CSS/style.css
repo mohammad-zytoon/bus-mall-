@@ -1,0 +1,68 @@
+
+*{
+    box-sizing: border-box;
+  }
+  
+body{
+background-color: whitesmoke;
+
+}
+main{
+    margin-top: 20px;
+    border: 3px solid #df8909;
+    margin-left: 35px;
+    margin-right: 35px;
+    
+    background-color: wheat;
+    
+}
+
+header{
+    
+    border: 3px solid #df8909;
+    margin-left: 35px;
+    margin-right: 35px;
+
+}
+    
+
+h1{
+    text-align: center;
+    float: right;
+    margin-top: 30px;
+    margin-right: 350px;
+    font-size: 25px;
+    color: teal;
+
+}
+
+#sunny-bus{
+    width: 100px;
+    height: 100px;
+}
+
+
+    img{
+    width: 250px;
+    height:250px;
+    margin-left: 25px;
+    
+  }
+
+  #images{
+
+    margin-left: 175px;
+    margin-top: 50px;
+  }
+
+  button{
+    margin-top: 50px;
+    margin-left: 40px;
+    width: 10%;
+    height: 50px;
+    background-color:rgb(202, 210, 236);
+  }
+  ul{
+
+
+  }
