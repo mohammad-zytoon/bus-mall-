@@ -115,9 +115,9 @@ function handleClick(event) {
         }
 
         else if (event.target.id === 'leftimg') {
-           console.log(rghitIndex);
-           
-            
+            console.log(rghitIndex);
+
+
             Mallitems.allProducts[leftIndex].votes++;
             // Mallitems.allProducts[middleIndex].appear++;
             //Mallitems.allProducts[rghitIndex].appear++;
@@ -128,7 +128,7 @@ function handleClick(event) {
             // Mallitems.allProducts[middleIndex].appear++;
             // Mallitems.allProducts[leftIndex].appear++;
         } else {
-            
+
             voterAttempts--;
         }
 
@@ -143,7 +143,7 @@ function handleClick(event) {
 }
 function vooterclickbotton() {
     let vooteResult = document.getElementById('result-list');
-    
+
     let busmallItems;
 
     for (let j = 0; j < Mallitems.allProducts.length; j++) {
@@ -153,6 +153,7 @@ function vooterclickbotton() {
 
     }
     //resultList.textContent = busmallItems;
+
     resultList.removeEventListener('click', vooterclickbotton);
 }
 
