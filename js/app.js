@@ -16,6 +16,12 @@ let leftIndex;
 let middleIndex;
 let rghitIndex;
 
+let namesArr=[];
+let votesArr=[];
+let shownArr=[];
+let imagesGroup = [];
+
+
 //let imgShowArr = [];
 
 //imgShowArr[0] = document.getElementById('leftimg');
@@ -30,7 +36,7 @@ function Mallitems(name, source) {
     this.votes = 0;
     this.appear = 0;
     Mallitems.allProducts.push(this);
-
+    namesArr.push(this.name);
 
 }
 Mallitems.allProducts = [];
@@ -70,13 +76,14 @@ function renderItems() {
     middleIndex = generatRandomind();
     rghitIndex = generatRandomind();
 
-    while (leftIndex === middleIndex || leftIndex === rghitIndex || rghitIndex === middleIndex) {
+    while (leftIndex === middleIndex || leftIndex === rghitIndex || rghitIndex === middleIndex|| imagesGroup.includes(leftIndex) || imagesGroup.includes(middleIndex) || imagesGroup.includes(rghitIndex))  {
         middleIndex = generatRandomind();
         rghitIndex = generatRandomind();
     }
     //console.log(allProducts[leftIndex].source);
     // console.log(allProducts[middleIndex].source);
     //console.log(allProducts[rghitIndex].source);
+    imagesGroup = [];
 
     leftImageElement.src = Mallitems.allProducts[leftIndex].source;
     Mallitems.allProducts[leftIndex].appear++;
@@ -89,6 +96,10 @@ function renderItems() {
     rightImageElement.src = Mallitems.allProducts[rghitIndex].source;
     Mallitems.allProducts[middleIndex].appear++;
     // imgShowArr[2].alt = allProducts[rghitIndex].name;
+    imagesGroup.push(leftIndex);
+    imagesGroup.push(middleIndex);
+    imagesGroup.push(rghitIndex);
+    console.log(imagesGroup);
 
 
 
@@ -147,12 +158,16 @@ function vooterclickbotton() {
     let busmallItems;
 
     for (let j = 0; j < Mallitems.allProducts.length; j++) {
+        votesArr.push(Mallitems.allProducts[j].votes);
+        shownArr.push(Mallitems.allProducts[j].appear);
+
         busmallItems = document.createElement('li');
         vooteResult.appendChild(busmallItems);
         busmallItems.textContent = `${Mallitems.allProducts[j].name} take ${Mallitems.allProducts[j].votes} votes and shown for ${Mallitems.allProducts[j].appear} times`;
 
     }
     //resultList.textContent = busmallItems;
+    chart()
 
     resultList.removeEventListener('click', vooterclickbotton);
 }
@@ -161,3 +176,45 @@ function vooterclickbotton() {
 
 
 
+function chart() {
+    let ctx = document.getElementById('myChart').getContext('2d');
+    
+    let chart= new Chart(ctx,{
+     
+        // what type is the chart
+     type: 'bar',
+  
+    
+     //  the data for showing
+     data:{
+      
+        //  for the names
+        labels: namesArr,
+        
+        datasets: [
+          {
+          label: 'busmall votes',
+          data: votesArr,
+          backgroundColor: [
+            'rgb(251, 93, 76)',
+          ],
+    
+          borderWidth: 1
+        },
+  
+        {
+          label: 'busmall shown',
+          data: shownArr,
+          backgroundColor: [
+            'black',
+          ],
+    
+          borderWidth: 1
+        }
+        
+      ]
+      },
+      options: {}
+    });
+    
+  }
