@@ -41,6 +41,34 @@ function Mallitems(name, source) {
 }
 Mallitems.allProducts = [];
 
+function saveAtStorage() {
+   
+    let itemArrayString=JSON.stringify(Mallitems.allProducts);
+    console.log(itemArrayString);
+    
+    localStorage.setItem('busproduct',itemArrayString);
+  
+  }
+  function getProductsVotes() {
+
+    
+    let votesData =localStorage.getItem('busproduct');
+  //  console.log(votesData);
+  
+    
+    let busMallData=JSON.parse(votesData);
+  
+    console.log(busMallData);
+  
+   
+    if (busMallData !==null) {
+        Mallitems.allProducts=busMallData;
+    }
+  
+ 
+  
+  }
+
 
 
 new Mallitems('bag', 'img/bag.jpg');
@@ -79,6 +107,7 @@ function renderItems() {
     while (leftIndex === middleIndex || leftIndex === rghitIndex || rghitIndex === middleIndex|| imagesGroup.includes(leftIndex) || imagesGroup.includes(middleIndex) || imagesGroup.includes(rghitIndex))  {
         middleIndex = generatRandomind();
         rghitIndex = generatRandomind();
+        leftIndex = generatRandomind();
     }
     //console.log(allProducts[leftIndex].source);
     // console.log(allProducts[middleIndex].source);
@@ -109,7 +138,7 @@ function renderItems() {
 renderItems();
 
 sectionElement.addEventListener('click', handleClick);
-
+let resultList;
 function handleClick(event) {
     console.log(event.target.id);
 
@@ -146,10 +175,11 @@ function handleClick(event) {
         renderItems();
     }
     else {
-        let resultList = document.getElementById('voote-result');
+         resultList = document.getElementById('voote-result');
         resultList.addEventListener('click', vooterclickbotton);
-
+        saveAtStorage();
         images.removeEventListener('click', handleClick);
+       
     }
 }
 function vooterclickbotton() {
@@ -168,6 +198,7 @@ function vooterclickbotton() {
     }
     //resultList.textContent = busmallItems;
     chart()
+    
 
     resultList.removeEventListener('click', vooterclickbotton);
 }
@@ -218,3 +249,5 @@ function chart() {
     });
     
   }
+
+  getProductsVotes();
